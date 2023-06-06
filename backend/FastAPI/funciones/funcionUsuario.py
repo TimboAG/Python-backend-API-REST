@@ -1,12 +1,10 @@
 from clases.claseUsuario import *
 
-def agregar_usuario(usuario: Usuario):    
-    if type(buscar_usuario_id(usuario.id)) == Usuario:
-        return {"error": "El usuario ya se encuentra registrado"}
-    else:
+
+def agregar_usuario(usuario: Usuario): 
         usuario_lista=mostrar_usuarios()      
         usuario_lista.append(usuario)
-        return usuario_lista
+        return usuario
 
 def mostrar_usuarios():    
     usuario_lista=[Usuario(id=1,nombre="Usuario1", apellido="apellido1", url= "url1", edad=1),
@@ -15,14 +13,11 @@ def mostrar_usuarios():
     return usuario_lista
     
 def buscar_usuario_id(id):
-    usuario_lista=mostrar_usuarios()
-    try:
-        mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
-        return list(mi_usuario)[0]
-    except:
-        return {"error": "No se encuentra el usuario"}
+    usuario_lista=mostrar_usuarios()   
+    mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
+    return list(mi_usuario)[0]   
     
-def actaulizar_usuario(usuario: Usuario):
+def actualizar_usuario(usuario: Usuario):
     usuario_lista=mostrar_usuarios()
     usuario_encontrado= False
     for index, modifica_usuario in enumerate(usuario_lista):
@@ -30,10 +25,7 @@ def actaulizar_usuario(usuario: Usuario):
             usuario_lista[index]=usuario
             usuario_encontrado= True
             
-    if usuario_encontrado == False:
-        return {"error": "No se encuentra el usuario"}
-    else:
-        return usuario
+    return usuario_encontrado 
     
 def eliminar_usuario(id: int):
     usuario_lista=mostrar_usuarios()
@@ -43,7 +35,4 @@ def eliminar_usuario(id: int):
             del usuario_lista[index]
             usuario_encontrado= True
             
-    if usuario_encontrado == False:
-        return {"error": "No se encuentra el usuario que quiere eliminar"}
-    else:
-        return {"exito": "El usuario se ha eliminado correctamente"}
+    return usuario_encontrado
