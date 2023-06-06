@@ -1,5 +1,13 @@
 from clases.claseUsuario import *
 
+def agregar_usuario(usuario: Usuario):    
+    if type(buscar_usuario_id(usuario.id)) == Usuario:
+        return {"error": "El usuario ya se encuentra registrado"}
+    else:
+        usuario_lista=mostrar_usuarios()      
+        usuario_lista.append(usuario)
+        return usuario_lista
+
 def mostrar_usuarios():    
     usuario_lista=[Usuario(id=1,nombre="Usuario1", apellido="apellido1", url= "url1", edad=1),
                 Usuario(id=2,nombre="Usuario2", apellido="apellido2", url= "url2", edad=2),

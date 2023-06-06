@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from funciones.funcionUsuario import *
 
 app=FastAPI()
@@ -17,5 +16,9 @@ async def usuario(id:int):
 @app.get("/usuario/")
 async def usuario(id:int):
     return buscar_usuario_id(id)
+
+@app.post("/usuario/")
+async def usuario(usuario: Usuario):
+    return agregar_usuario(usuario)
     
     
