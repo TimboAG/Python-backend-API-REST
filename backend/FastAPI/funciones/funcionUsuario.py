@@ -21,3 +21,16 @@ def buscar_usuario_id(id):
         return list(mi_usuario)[0]
     except:
         return {"error": "No se encuentra el usuario"}
+    
+def actaulizar_usuario(usuario: Usuario):
+    usuario_lista=mostrar_usuarios()
+    usuario_encontrado= False
+    for index, modifica_usuario in enumerate(usuario_lista):
+        if modifica_usuario.id== usuario.id:
+            usuario_lista[index]=usuario
+            usuario_encontrado= True
+            
+    if usuario_encontrado == False:
+        return {"error": "No se encuentra el usuario"}
+    else:
+        return usuario

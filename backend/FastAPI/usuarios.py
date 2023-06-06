@@ -21,4 +21,7 @@ async def usuario(id:int):
 async def usuario(usuario: Usuario):
     return agregar_usuario(usuario)
     
+@app.put("/usuario/")
+async def usuario(usuario: Usuario):
+    return actaulizar_usuario(usuario)
     
