@@ -24,4 +24,8 @@ async def usuario(usuario: Usuario):
 @app.put("/usuario/")
 async def usuario(usuario: Usuario):
     return actaulizar_usuario(usuario)
+
+@app.delete("/usuario/{id}")
+async def usuario(id: int):
+    return eliminar_usuario(id)
     

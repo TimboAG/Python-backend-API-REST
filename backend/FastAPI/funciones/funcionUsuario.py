@@ -34,3 +34,16 @@ def actaulizar_usuario(usuario: Usuario):
         return {"error": "No se encuentra el usuario"}
     else:
         return usuario
+    
+def eliminar_usuario(id: int):
+    usuario_lista=mostrar_usuarios()
+    usuario_encontrado= False
+    for index, modifica_usuario in enumerate(usuario_lista):
+        if modifica_usuario.id== id:
+            del usuario_lista[index]
+            usuario_encontrado= True
+            
+    if usuario_encontrado == False:
+        return {"error": "No se encuentra el usuario que quiere eliminar"}
+    else:
+        return {"exito": "El usuario se ha eliminado correctamente"}
