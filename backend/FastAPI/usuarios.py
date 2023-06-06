@@ -5,7 +5,10 @@ app=FastAPI()
 
 @app.get("/usuarios", status_code=200)
 async def usuarios():
-    return mostrar_usuarios()
+    try:
+        return mostrar_usuarios()
+    except:
+        raise HTTPException(status_code=404, detail="Ocurrio un error")
 
 #Por path
 @app.get("/usuario/{id}", status_code=200)
