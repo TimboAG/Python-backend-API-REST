@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from funciones.funcionUsuario import *
 
-routes=APIRouter(prefix="/usuario",tags="usuario", responses={404: {"message": "No encontrado"}})
+routes=APIRouter(prefix="/usuario",tags=["usuario"], responses={404: {"message": "No encontrado"}})
 
 @routes.get("/", status_code=200)
 async def usuarios():
