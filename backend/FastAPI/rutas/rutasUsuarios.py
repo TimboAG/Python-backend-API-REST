@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from funciones.funcionUsuario import *
 
-routes=APIRouter()
+routes=APIRouter(prefix="/usuario",tags="usuario", responses={404: {"message": "No encontrado"}})
 
-@routes.get("/usuarios", status_code=200)
+@routes.get("/", status_code=200)
 async def usuarios():
     try:
         return mostrar_usuarios()
@@ -11,7 +11,7 @@ async def usuarios():
         raise HTTPException(status_code=404, detail="Ocurrio un error")
 
 #Por path
-@routes.get("/usuario/{id}", status_code=200)
+@routes.get("/{id}", status_code=200)
 async def usuario(id:int):
     try:
         return buscar_usuario_id(id)
@@ -20,21 +20,21 @@ async def usuario(id:int):
     
 
 #Por query
-@routes.get("/usuario/", status_code=200)
+@routes.get("/", status_code=200)
 async def usuario(id:int):
     try:
         return buscar_usuario_id(id)
     except:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
 
-@routes.post("/usuario/", status_code=201)
+@routes.post("/", status_code=201)
 async def usuario(usuario: Usuario):   
     if type(buscar_usuario_id(usuario.id)) == Usuario:        
-        raise HTTPException(status_code=404, detail="No se encuentra el usuario")
+        raise HTTPException(status_code=404, detail="El  usuario ya se encuentra registrado")
     else:        
         return agregar_usuario(usuario)
     
-@routes.put("/usuario/",  status_code=200)
+@routes.put("/",  status_code=200)
 async def usuario(usuario: Usuario):
     if actualizar_usuario(usuario) == True:
         return actualizar_usuario(usuario)
@@ -42,7 +42,7 @@ async def usuario(usuario: Usuario):
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
     
 
-@routes.delete("/usuario/{id}", status_code=200)
+@routes.delete("/{id}", status_code=200)
 async def usuario(id: int):
     if  eliminar_usuario(id) == True :
         return eliminar_usuario(id)

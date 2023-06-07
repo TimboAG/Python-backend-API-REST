@@ -13,9 +13,13 @@ def mostrar_usuarios():
     return usuario_lista
     
 def buscar_usuario_id(id):
-    usuario_lista=mostrar_usuarios()   
+    usuario_lista = mostrar_usuarios()
     mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
-    return list(mi_usuario)[0]   
+    mi_usuario = list(mi_usuario)
+    if len(mi_usuario) > 0:
+        return mi_usuario[0]
+    else:
+        return None   
     
 def actualizar_usuario(usuario: Usuario):
     usuario_lista=mostrar_usuarios()
