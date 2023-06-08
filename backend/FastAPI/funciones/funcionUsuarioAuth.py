@@ -4,16 +4,14 @@ from excepciones.excepcion import *
 
 def buscar_usuario(nombre_usuario: str):
     if nombre_usuario in usuario_db:
-        return UsuarioDb(**usuario_db[nombre_usuario])
-
-
+        return UsuarioDb(usuario_db[nombre_usuario])
+    
 def verificar_usuario(username, password):
-    usuario = usuario_db.get(username)
-    if not usuario:
+    mi_usuario_db = usuario_db.get(username)
+    if not mi_usuario_db:
         raise UsuarioNoEncontradoException()
-    if not password == usuario.contraseña:
+    mi_usuario= buscar_usuario(username)
+    if not password == mi_usuario.contraseña:
         raise ContraseñaIncorrectaException()
-    return {"access_token": usuario.nombre_usuario, "token_type": "bearer"}
-
-
+    return {"acces_token": mi_usuario.nombre_usuario, "token_type": "bearer"}
 
