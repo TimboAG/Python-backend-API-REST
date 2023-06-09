@@ -2,23 +2,30 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from funciones.funcionUsuarioAuth import *
 from excepciones.excepcion import *
+from jose import jwt, JWTError
+
 
 routes=APIRouter()
 oauth2= OAuth2PasswordBearer(tokenUrl="login")
 
-
-async def current_user(token:str= Depends(oauth2) ):
-    usuario= buscar_usuario(token)
-    if not usuario:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, 
+async def authUsuario(token:str = Depends(oauth2)):
+    excepcion= HTTPException(status.HTTP_401_UNAUTHORIZED, 
                             detail="Credenciales de autenticacion invalidas", 
                             headers={"WWW-Authenticate": "Bearer"})
-    if usuario.activo:
+    try:
+        usuario_nombre=jwt.decode(token,SECRET,algorithms= [ALGORITM0]).get("sub")
+        if usuario_nombre ==None:
+            raise excepcion
+    except JWTError:
+        raise excepcion
+    return buscar_usuario(usuario_nombre) 
+
+
+async def current_user(usuario:Usuario= Depends(authUsuario) ):    
+    if usuario.activo == False:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, 
                             detail="Usuario inactivo")        
-    return usuario
-        
-
+    return usuario 
 
 @routes.post("/login", status_code=200)
 async def login(form: OAuth2PasswordRequestForm = Depends()):

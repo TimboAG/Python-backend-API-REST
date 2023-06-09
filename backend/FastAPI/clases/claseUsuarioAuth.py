@@ -15,7 +15,7 @@ usuario_db={
         "nombre_completo": "nombre1 apellido1",
         "email": "usuario1@gmail.com",
         "activo": True,
-        "contraseña": "usuario1"
+        "contraseña": "$2a$12$G7kz4QDbjRqvSMjuRkb6vu.p8vTZsMcL5uUj3fyJ7JFowZfTPChH."
     },
     "usuario2":{
         "nombre_usuario": "usuario2",
