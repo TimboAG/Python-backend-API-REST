@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from funciones.funcionUsuario import *
+from db.client import db_client
 
 routes=APIRouter(prefix="/usuario",tags=["usuario"], responses={404: {"message": "No encontrado"}})
 
@@ -29,9 +30,9 @@ async def usuario(id:int):
 
 @routes.post("/", status_code=201)
 async def usuario(usuario: Usuario):   
-    if type(buscar_usuario_id(usuario.id)) == Usuario:        
-        raise HTTPException(status_code=404, detail="El  usuario ya se encuentra registrado")
-    else:        
+    # if type(buscar_usuario_id(usuario.id)) == Usuario:        
+    #     raise HTTPException(status_code=404, detail="El  usuario ya se encuentra registrado")
+    # else:        
         return agregar_usuario(usuario)
     
 @routes.put("/",  status_code=200)

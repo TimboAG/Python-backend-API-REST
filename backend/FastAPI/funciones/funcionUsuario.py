@@ -1,15 +1,19 @@
 from clases.claseUsuario import *
+import db.models.claseUsuario as mi_usuario_db
+from db.client import db_client
+
 
 
 def agregar_usuario(usuario: Usuario): 
-        usuario_lista=mostrar_usuarios()      
-        usuario_lista.append(usuario)
+        # usuario_lista=mostrar_usuarios()  
+        # usuario_lista.append(usuario)
+        usuario_dicionario=dict(Usuario)
+        id= db_client.local.usuario.insert_one(usuario_dicionario).inserted_id 
         return usuario
 
-def mostrar_usuarios():    
-    usuario_lista=[Usuario(id=1,nombre="Usuario1", apellido="apellido1", url= "url1", edad=1),
-                Usuario(id=2,nombre="Usuario2", apellido="apellido2", url= "url2", edad=2),
-                Usuario(id=3,nombre="Usuario3", apellido="apellido3", url= "url3", edad=3)]
+def mostrar_usuarios(): 
+    # db_client.local.usuario   
+    usuario_lista=[]
     return usuario_lista
     
 def buscar_usuario_id(id):
