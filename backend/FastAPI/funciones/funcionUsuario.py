@@ -1,15 +1,18 @@
-from clases.claseUsuario import *
-import db.models.claseUsuario as mi_usuario_db
+# from clases.claseUsuario import *
+# import db.models.claseUsuario as mi_usuario_db
+from db.models.claseUsuario import Usuario
 from db.client import db_client
+from db.schemas.usuario import usuario_schema
 
 
 
 def agregar_usuario(usuario: Usuario): 
         # usuario_lista=mostrar_usuarios()  
         # usuario_lista.append(usuario)
-        usuario_dicionario=dict(Usuario)
+        usuario_dicionario=dict(usuario)
         id= db_client.local.usuario.insert_one(usuario_dicionario).inserted_id 
-        return usuario
+        mi_usuario= buscar_usuario_id(id)
+        return mi_usuario
 
 def mostrar_usuarios(): 
     # db_client.local.usuario   
@@ -17,11 +20,22 @@ def mostrar_usuarios():
     return usuario_lista
     
 def buscar_usuario_id(id):
-    usuario_lista = mostrar_usuarios()
-    mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
-    mi_usuario = list(mi_usuario)
+    # usuario_lista = mostrar_usuarios()
+    # mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
+    # mi_usuario = list(mi_usuario)
+    mi_usuario=usuario_schema(db_client.local.usuario.find_one({"_id": id}))
     if len(mi_usuario) > 0:
-        return mi_usuario[0]
+        return Usuario(**mi_usuario)
+    else:
+        return None
+    
+def buscar_usuario_email(email: str):
+    # usuario_lista = mostrar_usuarios()
+    # mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
+    # mi_usuario = list(mi_usuario)
+    mi_usuario=usuario_schema(db_client.local.usuario.find_one({"email": email}))
+    if len(mi_usuario) > 0:
+        return Usuario(**mi_usuario)
     else:
         return None   
     
