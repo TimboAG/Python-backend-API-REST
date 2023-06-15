@@ -30,7 +30,7 @@ async def usuario(id:int):
 
 @routes.post("/", status_code=201)
 async def usuario(usuario: Usuario):   
-    if type(buscar_usuario_email(usuario.email)) == Usuario:        
+    if type(buscar_usuario_email(usuario)) == Usuario:        
         raise HTTPException(status_code=404, detail="El  usuario ya se encuentra registrado")
     else:        
         return agregar_usuario(usuario)

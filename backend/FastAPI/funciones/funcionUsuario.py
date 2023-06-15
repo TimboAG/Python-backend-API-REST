@@ -29,11 +29,11 @@ def buscar_usuario_id(id):
     else:
         return None
     
-def buscar_usuario_email(email: str):
+def buscar_usuario_email(usuario: str):
     # usuario_lista = mostrar_usuarios()
     # mi_usuario = filter(lambda usuario: usuario.id == id, usuario_lista)
     # mi_usuario = list(mi_usuario)
-    mi_usuario=usuario_schema(db_client.local.usuario.find_one({"email": email}))
+    mi_usuario=usuario_schema(db_client.local.usuario.find_one({"email": usuario.email}))
     if len(mi_usuario) > 0:
         return Usuario(**mi_usuario)
     else:
