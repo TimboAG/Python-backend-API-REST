@@ -38,10 +38,11 @@ async def usuario(usuario: Usuario):
     else:        
         return agregar_usuario(usuario)
     
-@routes.put("/",  status_code=200)
+@routes.put("/", status_code=200, response_model=Usuario)
 async def usuario(usuario: Usuario):
-    if actualizar_usuario(usuario) == True:
-        return actualizar_usuario(usuario)
+    usuario_actualizado = actualizar_usuario("_id", ObjectId(usuario.id), usuario)
+    if usuario_actualizado:
+        return usuario_actualizado
     else:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
     

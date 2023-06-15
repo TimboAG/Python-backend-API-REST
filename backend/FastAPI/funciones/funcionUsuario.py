@@ -48,15 +48,19 @@ def buscar_usuario(field: str, key):
     else:
         return None  
     
-def actualizar_usuario(usuario: Usuario):
-    usuario_lista=mostrar_usuarios()
-    usuario_encontrado= False
-    for index, modifica_usuario in enumerate(usuario_lista):
-        if modifica_usuario.id== usuario.id:
-            usuario_lista[index]=usuario
-            usuario_encontrado= True
-            
-    return usuario_encontrado 
+    
+def actualizar_usuario(field: str, key, usuario: Usuario):
+    usuario_dicionario = dict(usuario)
+    del usuario_dicionario["id"]
+    usuario_actualizado = db_client.local.usuario.find_one_and_replace(
+        {field: key},
+        usuario_dicionario,
+        return_document=True
+    )
+    if usuario_actualizado:
+        return Usuario(**usuario_schema(usuario_actualizado))
+    else:
+        return None
     
 def eliminar_usuario(field: str, key):  
     mi_usuario= db_client.local.usuario.find_one_and_delete({field: key})
