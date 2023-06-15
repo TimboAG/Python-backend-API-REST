@@ -1,15 +1,17 @@
 from fastapi import APIRouter, HTTPException
 from funciones.funcionUsuario import *
 from db.models.claseUsuario import Usuario
+from typing import List
+
 
 routes=APIRouter(prefix="/usuario",tags=["usuario"], responses={404: {"message": "No encontrado"}})
 
-@routes.get("/", status_code=200)
+@routes.get("/", status_code=200, response_model=List[Usuario])
 async def usuarios():
     try:
         return mostrar_usuarios()
     except:
-        raise HTTPException(status_code=404, detail="Ocurrio un error")
+        raise HTTPException(status_code=404, detail="Ocurrió un error")
 
 #Por path
 @routes.get("/{id}", status_code=200)

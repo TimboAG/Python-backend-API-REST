@@ -2,7 +2,7 @@
 # import db.models.claseUsuario as mi_usuario_db
 from db.models.claseUsuario import Usuario
 from db.client import db_client
-from db.schemas.usuario import usuario_schema
+from db.schemas.usuario import usuario_schema, listado_usuarios_schema
 
 
 
@@ -15,8 +15,7 @@ def agregar_usuario(usuario: Usuario):
         return mi_usuario
 
 def mostrar_usuarios(): 
-    # db_client.local.usuario   
-    usuario_lista=[]
+    usuario_lista=listado_usuarios_schema(db_client.local.usuario.find())
     return usuario_lista
     
 def buscar_usuario_id(id):

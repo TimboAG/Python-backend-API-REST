@@ -6,3 +6,4 @@ class Usuario(BaseModel):
     nombre_completo: str
     email: str
     activo: bool
+    

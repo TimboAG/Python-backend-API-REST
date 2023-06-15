@@ -8,3 +8,6 @@ def usuario_schema(usuario) -> dict:
         "email": usuario["email"],
         "activo": usuario["activo"]
     }
+    
+def listado_usuarios_schema(usuarios):
+    return [usuario_schema(usuario) for usuario in usuarios]
