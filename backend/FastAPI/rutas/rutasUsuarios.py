@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from funciones.funcionUsuario import *
 from db.models.claseUsuario import Usuario
 from typing import List
+from bson import ObjectId
 
 
 routes=APIRouter(prefix="/usuario",tags=["usuario"], responses={404: {"message": "No encontrado"}})
@@ -15,18 +16,18 @@ async def usuarios():
 
 #Por path
 @routes.get("/{id}", status_code=200)
-async def usuario(id:int):
+async def usuario(id:str):
     try:
-        return buscar_usuario_id(id)
+        return buscar_usuario("_id", ObjectId(id)  )
     except:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
     
 
 #Por query
 @routes.get("/", status_code=200)
-async def usuario(id:int):
+async def usuario(id:str):
     try:
-        return buscar_usuario_id(id)
+        return buscar_usuario("_id", ObjectId(id)  )
     except:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
 
@@ -46,8 +47,9 @@ async def usuario(usuario: Usuario):
     
 
 @routes.delete("/{id}", status_code=200)
-async def usuario(id: int):
-    if  eliminar_usuario(id) == True :
-        return eliminar_usuario(id)
+async def usuario(id: str):
+    if  eliminar_usuario("_id", ObjectId(id)) == True :
+        eliminar_usuario("_id", ObjectId(id))         
+        return HTTPException(status_code=200, detail="Se elimino correctamente el usuario")    
     else:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
