@@ -21,8 +21,6 @@ async def usuario(id:str):
         return buscar_usuario("_id", ObjectId(id)  )
     except:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
-    
-
 #Por query
 @routes.get("/", status_code=200)
 async def usuario(id:str):
@@ -46,7 +44,6 @@ async def usuario(usuario: Usuario):
     else:
         raise HTTPException(status_code=404, detail="No se encuentra el usuario")
     
-
 @routes.delete("/{id}", status_code=200)
 async def usuario(id: str):
     if  eliminar_usuario("_id", ObjectId(id)) == True :
