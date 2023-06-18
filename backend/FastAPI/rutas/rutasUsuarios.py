@@ -4,7 +4,6 @@ from db.models.claseUsuario import Usuario
 from typing import List
 from bson import ObjectId
 
-
 routes=APIRouter(prefix="/usuario",tags=["usuario"], responses={404: {"message": "No encontrado"}})
 
 @routes.get("/", status_code=200, response_model=List[Usuario])
